@@ -14,6 +14,13 @@ The goal was to practice working with APIs, cleaning the data in pandas, and cre
 - Jupyter Notebook
 - pandas, requests, folium
 
+## Preview
+
+Here’s a preview of the traffic map:
+
+![NYC Traffic Map](traffic api project map.png)
+
+
 ## Why this project
 I wanted to build something small but practical that shows I can:
 1. Work with APIs
@@ -24,4 +31,3 @@ I wanted to build something small but practical that shows I can:
 I’d like to expand this project by:
 - Adding more locations
 - Automating updates so the data refreshes in real time
-- Trying out a dashboard with something like Streamlit
