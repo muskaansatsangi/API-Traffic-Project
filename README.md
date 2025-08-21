@@ -18,7 +18,7 @@ The goal was to practice working with APIs, cleaning the data in pandas, and cre
 
 Here’s a preview of the traffic map:
 
-![NYC Traffic Map](traffic api project map.png)
+![NYC Traffic Map](traffic_map.png)
 
 
 ## Why this project
