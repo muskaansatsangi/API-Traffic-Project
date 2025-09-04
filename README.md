@@ -20,13 +20,6 @@ Here’s a preview of the traffic map:
 
 ![NYC Traffic Map](traffic_map.png)
 
-
-# NYC Traffic Data Project 🚦  
-
-This is a small project where I explored live traffic data in New York City using the TomTom API. The goal was to practice working with APIs, cleaning the data in pandas, and creating a simple visualization.
-
----
-
 ## Setup Instructions  
 
 ### 1. Install dependencies  
