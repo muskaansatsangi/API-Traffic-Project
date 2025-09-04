@@ -47,8 +47,3 @@ import os
 load_dotenv()
 TOMTOM_API_KEY = os.getenv("TOMTOM_API_KEY")
 ```
-
----
-
-- Adding more locations  
-- Automating updates so the data refreshes in real time  
