@@ -43,6 +43,9 @@ This project combines several travel metrics, including:
 
 ## Preview
 
+Here's a preview of the interactive weather map:
+
+![RouteWise Weather Map](weather_map.png)
 
 
 ## Setup Instructions
