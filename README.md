@@ -53,11 +53,11 @@ import os
 load_dotenv()
 TOMTOM_API_KEY = os.getenv("TOMTOM_API_KEY")
 
----
+--------
 ## RouteWise 🌦️🚗
 
 This is a project where I combined live traffic and weather data to better understand travel conditions in New York City.
-The goal was to practice working with multiple APIs, combining different data sources, and creating a simple travel risk score.
+The goal was to practice integrating multiple APIs, combining different data sources, and creating a simple travel risk score.
 
 📁 **Project folder:** [Travel-Risk-Project](Travel-Risk-Project/)
 
@@ -66,7 +66,7 @@ The goal was to practice working with multiple APIs, combining different data so
 - Combined live traffic data from the TomTom Traffic API with weather data from the Open-Meteo API
 - Retrieved weather conditions including rain probability, wind gusts, and visibility
 - Calculated an overall travel risk score using traffic, weather, and rush-hour conditions
-- Displayed travel conditions on interactive Folium maps
+- Visualized travel conditions on interactive Folium maps
 - Generated a simple travel recommendation based on current conditions
 
 ### Tech Stack
