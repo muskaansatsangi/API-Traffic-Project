@@ -67,3 +67,9 @@ import os
 load_dotenv()
 TOMTOM_API_KEY = os.getenv("TOMTOM_API_KEY")
 ```
+
+## Traffic Metric
+
+The congestion ratio compares the current traffic speed with the normal free-flow speed.
+
+A lower ratio indicates heavier traffic, while a higher ratio indicates traffic closer to normal conditions.
