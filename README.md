@@ -1,6 +1,6 @@
 # NYC Traffic Data Project 🚦
 
-This is a small project where I explored live traffic data in New York City using the TomTom API.  
+This is a project where I explored live traffic data in New York City using the TomTom API.  
 The goal was to practice working with APIs, cleaning the data in pandas, and creating a simple visualization.
 
 ## What I did
@@ -47,3 +47,26 @@ import os
 load_dotenv()
 TOMTOM_API_KEY = os.getenv("TOMTOM_API_KEY")
 ```
+
+------------------------------------
+
+# RouteWise 🌦️🚗
+
+This is a small project where I combined live traffic and weather data to better understand travel conditions in New York City.
+The goal was to practice working with multiple APIs, combining different data sources, and creating a simple travel risk score.
+
+## What I did
+
+- Combined live traffic data from the TomTom Traffic API with weather data from the Open-Meteo API
+- Calculated an overall travel risk score using traffic, weather, and rush-hour conditions
+- Evaluated rain probability, wind gusts, and visibility
+- Displayed travel conditions on interactive Folium maps
+- Created a simple recommendation based on current conditions
+
+## Tech Stack
+
+- Python
+- Jupyter Notebook
+- pandas, requests, folium
+- TomTom Traffic API
+- Open-Meteo API
