@@ -20,6 +20,15 @@ The goal was to practice making API requests, working with JSON data, organizing
 - Wall Street
 - Brooklyn Bridge
 
+## Traffic Metrics
+
+This project compares several traffic metrics returned by the TomTom Traffic API, including:
+
+- **Current Speed** – The current traffic speed at each location.
+- **Free-Flow Speed** – The expected speed under normal traffic conditions.
+- **Congestion Ratio** – The current speed divided by the free-flow speed. Lower values indicate heavier traffic.
+- **Traffic Risk** – A simple score calculated from the congestion ratio to estimate overall traffic conditions.
+
 ## Tech Stack
 
 - Python
@@ -67,12 +76,3 @@ import os
 load_dotenv()
 TOMTOM_API_KEY = os.getenv("TOMTOM_API_KEY")
 ```
-
-## Traffic Metrics
-
-This project compares several traffic metrics returned by the TomTom Traffic API, including:
-
-- **Current Speed** – The current traffic speed at each location.
-- **Free-Flow Speed** – The expected speed under normal traffic conditions.
-- **Congestion Ratio** – The current speed divided by the free-flow speed. Lower values indicate heavier traffic.
-- **Traffic Risk** – A simple score calculated from the congestion ratio to estimate overall traffic conditions.
