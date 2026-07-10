@@ -53,7 +53,7 @@ TOMTOM_API_KEY = os.getenv("TOMTOM_API_KEY")
 ```
 
 
-📁 Project folder: `NYC-Traffic-Analyzer`
+📁 Project folder: [NYC-Traffic-Analyzer](NYC-Traffic-Analyzer/)
 ------------------------------------
 
 # RouteWise 🌦️🚗
@@ -77,4 +77,4 @@ The goal was to practice working with multiple APIs, combining different data so
 - TomTom Traffic API
 - Open-Meteo API
 
-📁 Project folder: `Travel-Risk-Project`
+📁 Project folder: [Travel-Risk-Project](Travel-Risk-Project/)
