@@ -68,8 +68,11 @@ load_dotenv()
 TOMTOM_API_KEY = os.getenv("TOMTOM_API_KEY")
 ```
 
-## Traffic Metric
+## Traffic Metrics
 
-The congestion ratio compares the current traffic speed with the normal free-flow speed.
+This project compares several traffic metrics returned by the TomTom Traffic API, including:
 
-A lower ratio indicates heavier traffic, while a higher ratio indicates traffic closer to normal conditions.
+- **Current Speed** – The current traffic speed at each location.
+- **Free-Flow Speed** – The expected speed under normal traffic conditions.
+- **Congestion Ratio** – The current speed divided by the free-flow speed. Lower values indicate heavier traffic.
+- **Traffic Risk** – A simple score calculated from the congestion ratio to estimate overall traffic conditions.
