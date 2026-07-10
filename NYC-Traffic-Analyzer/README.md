@@ -1,15 +1,24 @@
 # NYC Traffic Analyzer 🚦
 
-This is a small project where I explored live traffic data in New York City using the TomTom API.
-The goal was to practice working with APIs, cleaning the data in pandas, and creating a simple visualization.
+This project explores live traffic conditions across several locations in New York City using the TomTom Traffic API.
+
+The goal was to practice making API requests, working with JSON data, organizing the results in pandas, and creating a traffic visualization.
 
 ## What I did
 
-- Pulled real-time traffic data for several well-known NYC locations (including Times Square and Wall Street)
+- Pulled live traffic data for several NYC locations
 - Stored the results in a pandas DataFrame
-- Compared current speeds with free-flow speeds to measure congestion
-- Calculated a congestion ratio for each location
-- Plotted the locations on an interactive map using Folium
+- Compared current speeds with free-flow speeds
+- Calculated congestion ratios and traffic risk
+- Created an interactive Folium map
+
+## Locations
+
+- Times Square
+- Central Park South
+- Grand Central
+- Wall Street
+- Brooklyn Bridge
 
 ## Tech Stack
 
@@ -17,12 +26,10 @@ The goal was to practice working with APIs, cleaning the data in pandas, and cre
 - Jupyter Notebook
 - pandas
 - requests
-- folium
+- Folium
 - TomTom Traffic API
 
 ## Preview
-
-Here's a preview of the traffic map:
 
 ![NYC Traffic Map](traffic_map.png)
 
