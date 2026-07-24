@@ -68,6 +68,10 @@ if map_data["last_clicked"] is not None:
         road_closed = traffic["roadClosure"]
         confidence = traffic["confidence"]
 
+        # Convert speeds from km/h to mph.
+        current_speed_mph = round(current_speed * 0.621371)
+        free_flow_speed_mph = round(free_flow_speed * 0.621371)
+
         # Compare the current speed with the normal speed.
         if free_flow_speed > 0:
             speed_ratio = current_speed / free_flow_speed
@@ -85,8 +89,8 @@ if map_data["last_clicked"] is not None:
         # Display the traffic information.
         st.subheader("Traffic Information")
 
-        st.metric("Current Speed", f"{current_speed} km/h")
-        st.metric("Free Flow Speed", f"{free_flow_speed} km/h")
+        st.metric("Current Speed", f"{current_speed_mph} mph")
+        st.metric("Free Flow Speed", f"{free_flow_speed_mph} mph")
         st.metric("Travel Time", f"{travel_time} sec")
 
         # Display a colored traffic message.
