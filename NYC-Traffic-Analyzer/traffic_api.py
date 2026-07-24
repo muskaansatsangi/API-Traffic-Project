@@ -4,6 +4,9 @@ import requests
 # Access environment variables, like the API key.
 import os
 
+# Streamlit is used to read secrets when deployed.
+import streamlit as st
+
 # Load variables from the .env file into Python.
 from dotenv import load_dotenv
 
@@ -11,8 +14,13 @@ from dotenv import load_dotenv
 # Read the .env file so Python can access the API key.
 load_dotenv()
 
-# Get the TomTom API key from the .env file.
-TOMTOM_API_KEY = os.getenv("TOMTOM_API_KEY")
+# Get the API key.
+# When running locally, it uses the .env file.
+# When running on Streamlit Cloud, it uses Streamlit Secrets.
+TOMTOM_API_KEY = st.secrets.get(
+    "TOMTOM_API_KEY",
+    os.getenv("TOMTOM_API_KEY")
+)
 
 
 # Get traffic flow data for a specific latitude and longitude.
@@ -33,7 +41,6 @@ def get_flow(lat, lng):
 
         # Convert the response into a Python dictionary.
         data = response.json()
-
 
         # Return only the traffic flow information.
         return data.get("flowSegmentData")
