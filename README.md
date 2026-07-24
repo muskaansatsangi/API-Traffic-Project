@@ -2,30 +2,33 @@
 
 A collection of projects I built to practice working with APIs, data analysis, and visualization.
 
-## NYC Traffic Data Project 🚦
+## World Traffic Analyzer 🌍🚦
 
-This is a project where I explored live traffic data in New York City using the TomTom Traffic API.
+This is a project where I explored live traffic data from anywhere in the world using the TomTom Traffic Flow API and Reverse Geocoding API.
 
-The goal was to practice making API requests, organizing the results in pandas, comparing traffic speeds, and creating a simple map.
+The goal was to practice making API requests, organizing the results in pandas, comparing traffic speeds, and creating an interactive web application.
 
 ### What I did
 
-- Pulled live traffic data for several well-known NYC locations
+- Pulled live traffic data for user-selected locations around the world
 - Stored the results in a pandas DataFrame
 - Compared current speeds with free-flow speeds
 - Calculated congestion and traffic risk
 - Visualized the locations on an interactive Folium map
+- Displayed the road name and city using reverse geocoding
 
 ### Tech Stack
 
 - Python
 - Jupyter Notebook
+- Streamlit
 - pandas
 - requests
 - Folium
-- TomTom Traffic API
+- TomTom Traffic Flow API
+- TomTom Reverse Geocoding API
 
-📁 Project folder: [NYC-Traffic-Analyzer](NYC-Traffic-Analyzer/)
+📁 Project folder: [World-Traffic-Analyzer](World-Traffic-Analyzer/)
 
 ---
 
