@@ -18,11 +18,88 @@ st.title("World Traffic Analyzer")
 st.write("Click on a road to view live traffic conditions.")
 
 
-# Create a world map.
-world_map = folium.Map(
-    location=[20, 0],
-    zoom_start=2
-)
+# Store the clicked location so the map remembers it.
+# Streamlit reruns the entire app after a map click, so session state keeps the location.
+if "clicked_location" not in st.session_state:
+    st.session_state.clicked_location = None
+
+
+# Create a map centered on the clicked location if available.
+# If the user has clicked a location before, zoom into that area.
+# Otherwise, show the full world map.
+if st.session_state.clicked_location is not None:
+    world_map = folium.Map(
+        location=[
+            st.session_state.clicked_location["lat"],
+            st.session_state.clicked_location["lng"]
+        ],
+        zoom_start=14
+    )
+else:
+    world_map = folium.Map(
+        location=[20, 0],
+        zoom_start=2
+    )
+
+
+# Add the previous clicked location marker if it exists.
+# This keeps the pin visible after Streamlit reruns the app.
+if st.session_state.clicked_location is not None:
+
+    latitude = st.session_state.clicked_location["lat"]
+    longitude = st.session_state.clicked_location["lng"]
+
+    # Get the road and city information from TomTom.
+    place = get_place_info(latitude, longitude)
+
+    # Get live traffic information from TomTom.
+    traffic = get_flow(latitude, longitude)
+
+    if traffic is not None:
+
+        # Save traffic values from the API response.
+        current_speed = traffic["currentSpeed"]
+        free_flow_speed = traffic["freeFlowSpeed"]
+        travel_time = traffic["currentTravelTime"]
+        road_closed = traffic["roadClosure"]
+        confidence = traffic["confidence"]
+
+        # Convert speeds from km/h to mph.
+        current_speed_mph = round(current_speed * 0.621371)
+        free_flow_speed_mph = round(free_flow_speed * 0.621371)
+
+        # Compare current speed with normal free flow speed.
+        if free_flow_speed > 0:
+            speed_ratio = current_speed / free_flow_speed
+        else:
+            speed_ratio = 0
+
+        # Classify the current traffic level.
+        if speed_ratio >= 0.8:
+            traffic_level = "Light Traffic"
+        elif speed_ratio >= 0.5:
+            traffic_level = "Moderate Traffic"
+        else:
+            traffic_level = "Heavy Traffic"
+
+
+        # Create the text that appears inside the map popup.
+        popup_text = f"""
+        Road: {place['road']}<br>
+        City: {place['city']}<br>
+        Speed: {current_speed_mph} mph<br>
+        Traffic: {traffic_level}<br>
+        Confidence: {confidence}
+        """
+
+        # Add the clicked location marker back to the map.
+        folium.Marker(
+            [latitude, longitude],
+            popup=popup_text,
+            icon=folium.DivIcon(
+                html="<div style='font-size: 35px;'>📍</div>"
+            )
+        ).add_to(world_map)
 
 
 # Display the map and save click information.
@@ -34,26 +111,37 @@ map_data = st_folium(
 
 
 # Check whether the user clicked somewhere on the map.
+# Save the clicked coordinates so the app can reuse them after rerunning.
 if map_data["last_clicked"] is not None:
 
-    # Save the latitude and longitude of the clicked location.
-    latitude = map_data["last_clicked"]["lat"]
-    longitude = map_data["last_clicked"]["lng"]
+    st.session_state.clicked_location = {
+        "lat": map_data["last_clicked"]["lat"],
+        "lng": map_data["last_clicked"]["lng"]
+    }
 
-    # Show the selected coordinates rounded to 4 decimal places.
+    # Rerun the app so the map can reload using the new clicked location.
+    st.rerun()
+
+
+# Show traffic information.
+if st.session_state.clicked_location is not None:
+
+    latitude = st.session_state.clicked_location["lat"]
+    longitude = st.session_state.clicked_location["lng"]
+
+    # Display the selected coordinates.
     st.write("Latitude:", round(latitude, 4))
     st.write("Longitude:", round(longitude, 4))
 
-    # Get the road name and city for the clicked coordinates.
+    # Display location information.
     place = get_place_info(latitude, longitude)
 
     st.markdown(f"**Road:** {place['road']}")
     st.markdown(f"**City:** {place['city']}")
 
-    # Get live traffic data from TomTom.
+    # Get live traffic data.
     traffic = get_flow(latitude, longitude)
 
-    # Check whether TomTom returned traffic data.
     if traffic is None:
         st.error(
             "No traffic data was found. "
@@ -61,7 +149,8 @@ if map_data["last_clicked"] is not None:
         )
 
     else:
-        # Save the traffic values.
+
+        # Save traffic values.
         current_speed = traffic["currentSpeed"]
         free_flow_speed = traffic["freeFlowSpeed"]
         travel_time = traffic["currentTravelTime"]
@@ -72,13 +161,13 @@ if map_data["last_clicked"] is not None:
         current_speed_mph = round(current_speed * 0.621371)
         free_flow_speed_mph = round(free_flow_speed * 0.621371)
 
-        # Compare the current speed with the normal speed.
+        # Compare current speed with free flow speed.
         if free_flow_speed > 0:
             speed_ratio = current_speed / free_flow_speed
         else:
             speed_ratio = 0
 
-        # Decide the traffic level.
+        # Decide traffic level.
         if speed_ratio >= 0.8:
             traffic_level = "Light Traffic"
         elif speed_ratio >= 0.5:
@@ -86,14 +175,16 @@ if map_data["last_clicked"] is not None:
         else:
             traffic_level = "Heavy Traffic"
 
-        # Display the traffic information.
+
+        # Display traffic information.
         st.subheader("Traffic Information")
 
         st.metric("Current Speed", f"{current_speed_mph} mph")
         st.metric("Free Flow Speed", f"{free_flow_speed_mph} mph")
         st.metric("Travel Time", f"{travel_time} sec")
 
-        # Display a colored traffic message.
+
+        # Display traffic level with different colors.
         if traffic_level == "Light Traffic":
             st.success(f"Traffic Level: {traffic_level}")
         elif traffic_level == "Moderate Traffic":
@@ -101,10 +192,12 @@ if map_data["last_clicked"] is not None:
         else:
             st.error(f"Traffic Level: {traffic_level}")
 
+
         st.write(f"Road Closed: {road_closed}")
         st.write(f"Confidence: {confidence}")
 
-        # Explain what each metric means.
+
+        # Explain the meaning of each traffic metric.
         with st.expander("What do these metrics mean?"):
             st.write("**Current Speed:** The vehicle speed currently detected on the road.")
             st.write("**Free Flow Speed:** The expected speed when traffic is moving normally without congestion.")
