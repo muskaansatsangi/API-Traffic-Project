@@ -47,7 +47,7 @@ if map_data["last_clicked"] is not None:
     # Get live traffic data from TomTom.
     traffic = get_flow(latitude, longitude)
 
-       # Check whether TomTom returned traffic data.
+    # Check whether TomTom returned traffic data.
     if traffic is None:
         st.error(
             "No traffic data was found. "
@@ -61,6 +61,10 @@ if map_data["last_clicked"] is not None:
         travel_time = traffic["currentTravelTime"]
         road_closed = traffic["roadClosure"]
         confidence = traffic["confidence"]
+
+        # Convert speeds from kilometers per hour to miles per hour.
+        current_speed_mph = current_speed * 0.621371
+        free_flow_speed_mph = free_flow_speed * 0.621371
 
         # Compare the current speed with the normal speed.
         if free_flow_speed > 0:
@@ -79,8 +83,8 @@ if map_data["last_clicked"] is not None:
         # Display the traffic information.
         st.subheader("Traffic Information")
 
-        st.metric("Current Speed", f"{current_speed} km/h")
-        st.metric("Free Flow Speed", f"{free_flow_speed} km/h")
+        st.metric("Current Speed", f"{current_speed_mph:.1f} mph")
+        st.metric("Free Flow Speed", f"{free_flow_speed_mph:.1f} mph")
         st.metric("Travel Time", f"{travel_time} sec")
 
         # Display a colored traffic message.
@@ -93,3 +97,34 @@ if map_data["last_clicked"] is not None:
 
         st.write(f"Road Closed: {road_closed}")
         st.write(f"Confidence: {confidence}")
+
+        # Explain each traffic measurement.
+        with st.expander("What does this information mean?"):
+
+            st.markdown("""
+**Current Speed**  
+The estimated speed vehicles are currently traveling on the selected road.
+
+**Free Flow Speed**  
+The estimated speed vehicles would travel if there were little or no traffic.
+
+**Travel Time**  
+The estimated time required to drive through the road segment being measured.
+
+**Traffic Level**  
+This compares the current speed with the free flow speed.
+
+- **Light Traffic:** Vehicles are moving close to the normal speed.
+- **Moderate Traffic:** Vehicles are moving slower than normal.
+- **Heavy Traffic:** Vehicles are moving much slower than normal.
+
+**Road Closed**  
+- **False:** The road is open.
+- **True:** The road is reported as closed.
+
+**Confidence**  
+A value between **0 and 1** that represents how confident TomTom is in the traffic data.
+
+- **1.0:** Very high confidence.
+- **Closer to 0:** Lower confidence.
+""")
