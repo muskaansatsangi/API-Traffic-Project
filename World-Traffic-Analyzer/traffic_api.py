@@ -8,15 +8,15 @@ import streamlit as st
 # Load the local .env file.
 from dotenv import load_dotenv
 
-
-load_dotenv()
+# Load the API keys stored in the main project folder.
+load_dotenv("../.env")
 
 # Use Streamlit Secrets when deployed.
-# Use the .env file when running locally.
-TOMTOM_API_KEY = st.secrets.get(
-    "TOMTOM_API_KEY",
-    os.getenv("TOMTOM_API_KEY")
-)
+# Use the shared .env file when running locally.
+try:
+    TOMTOM_API_KEY = st.secrets["TOMTOM_API_KEY"]
+except Exception:
+    TOMTOM_API_KEY = os.getenv("TOMTOM_API_KEY")
 
 
 # Get traffic information for a clicked location.
