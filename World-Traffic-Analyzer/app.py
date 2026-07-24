@@ -53,7 +53,7 @@ if map_data["last_clicked"] is not None:
     # Get live traffic data from TomTom.
     traffic = get_flow(latitude, longitude)
 
-       # Check whether TomTom returned traffic data.
+    # Check whether TomTom returned traffic data.
     if traffic is None:
         st.error(
             "No traffic data was found. "
@@ -99,3 +99,12 @@ if map_data["last_clicked"] is not None:
 
         st.write(f"Road Closed: {road_closed}")
         st.write(f"Confidence: {confidence}")
+
+        # Explain what each metric means.
+        with st.expander("What do these metrics mean?"):
+            st.write("**Current Speed:** The vehicle speed currently detected on the road.")
+            st.write("**Free Flow Speed:** The expected speed when traffic is moving normally without congestion.")
+            st.write("**Travel Time:** The estimated time needed to travel the road segment.")
+            st.write("**Traffic Level:** A classification based on the current speed compared to the normal free-flow speed.")
+            st.write("**Road Closed:** Shows whether TomTom detected a road closure on this segment.")
+            st.write("**Confidence:** TomTom's confidence score showing how reliable the traffic data is.")
