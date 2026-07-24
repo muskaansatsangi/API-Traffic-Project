@@ -8,8 +8,10 @@ import streamlit as st
 # Load the local .env file.
 from dotenv import load_dotenv
 
-# Load the API keys stored in the main project folder.
+
+# Load shared .env file from the main project folder.
 load_dotenv("../.env")
+
 
 # Use Streamlit Secrets when deployed.
 # Use the shared .env file when running locally.
@@ -59,7 +61,7 @@ def get_place_info(lat, lng):
         addresses = data.get("addresses", [])
 
         if addresses:
-            address = addresses[0]["address"]
+            address = addresses[0].get("address", {})
 
             return {
                 "road": address.get("streetName", "Unknown Road"),
